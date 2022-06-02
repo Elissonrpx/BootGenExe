@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="da_teu_nome_bee">Da teu nome bee!</string>
+    <string name="agora_d_teu_e_mail">Agora dá teu e-mail!</string>
+    <string name="novo_cadastro">NOVO CADASTRO</string>
+    <string name="acompanhar_cadastro">ACOMPANHAR CADASTRO</string>
+    <string name="banner">banner</string>
+    <string name="titulofesta">titulofesta</string>
+    <string name="bem_vindes_nfesta_do_orgulho_2022">Bem Vindes!\nFESTA DO ORGULHO 2022</string>
+    <string name="confirme_a_senha">Confirme a senha.</string>
+    <string name="sidestrip">sidestrip</string>
+    <string name="digite_uma_senha">Digite uma senha.</string>
+    <string name="digite_seu_telefone">Digite seu Telefone</string>
+    <string name="digite_seu_endere_o_completo">Digite seu endereço completo.</string>
+    <string name="novo_cadastro1">NOVO CADASTRO</string>
+</resources>
