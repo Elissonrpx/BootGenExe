@@ -20,7 +20,7 @@ class ListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        binding=FragmentListBinding.inflate(layoutInflater, container, false)
+        binding = FragmentListBinding.inflate(layoutInflater, container, false)
 
         //configuração do recyclerview
         val adapter = TarefaAdapter()
