@@ -3,10 +3,14 @@ package com.example.ex_fragments_navcomponent.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ex_fragments_navcomponent.MainViewModel
 import com.example.ex_fragments_navcomponent.databinding.CardLayoutBinding
 import com.example.ex_fragments_navcomponent.model.Tarefa
 
-class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
+class TarefaAdapter(
+    val taskClickListener: TaskClickListener,
+    val mainViewModel: MainViewModel
+        ): RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
     private var listTarefa = emptyList<Tarefa>()
     class TarefaViewHolder (val binding : CardLayoutBinding): RecyclerView.ViewHolder(binding.root){
 
@@ -27,6 +31,17 @@ class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
         holder.binding.textData.text = tarefa.data
         holder.binding.switchAtivo.isChecked = tarefa.status
         holder.binding.textCategoria.text = tarefa.categoria.descricao
+
+        holder.itemView.setOnClickListener{
+            taskClickListener.onTaskClickListener(tarefa)
+        }
+
+        holder.binding.switchAtivo
+            .setOnCheckedChangeListener { _, ativo->
+                tarefa.status = ativo
+                mainViewModel.updateTarefa(tarefa)
+
+            }
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +50,7 @@ class TarefaAdapter : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
 
     fun setlist(list: List<Tarefa>){
 
-        listTarefa = list
+        listTarefa = list.sortedBy{it.id}
         notifyDataSetChanged()
     }
 }

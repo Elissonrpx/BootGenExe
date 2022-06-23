@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ex_fragments_navcomponent.api.Repository
 import com.example.ex_fragments_navcomponent.model.Categoria
+import com.example.ex_fragments_navcomponent.model.Tarefa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -18,7 +19,7 @@ class MainViewModel @Inject constructor(
     private val repository : Repository
 ) : ViewModel() {
 
-
+    var tarefaSelecionada: Tarefa? = null
     private val _myCategoriaResponse =
         MutableLiveData<Response<List<Categoria>>>()
 
@@ -26,6 +27,12 @@ class MainViewModel @Inject constructor(
         _myCategoriaResponse
 
     val dataSelecionada = MutableLiveData<LocalDate>()
+
+    private val _myTarefaResponse =
+        MutableLiveData<Response<List<Tarefa>>>()
+
+    val myTarefaResponse: LiveData<Response<List<Tarefa>>> =
+        _myTarefaResponse
 
     init {
        // listCategoria()
@@ -41,5 +48,40 @@ class MainViewModel @Inject constructor(
             }
         }
 
+    }
+
+    fun addTarefa(tarefa: Tarefa){
+
+        viewModelScope.launch{
+            try{
+               val response = repository.addTarefa(tarefa)
+                Log.d("Opa", response.body().toString())
+                listTarefa()
+            }catch (e: Exception){
+                Log.d("Erro", e.message.toString())
+            }
+        }
+    }
+
+    fun listTarefa(){
+        viewModelScope.launch{
+            try{
+                val response = repository.listTarefa()
+                _myTarefaResponse.value = response
+            }catch(e: Exception){
+                Log.d("Erro", e.message.toString())
+            }
+        }
+    }
+
+    fun updateTarefa(tarefa:Tarefa){
+        viewModelScope.launch{
+            try{
+                repository.updateTarefa(tarefa)
+                listTarefa()
+            }catch(e: Exception){
+                Log.d("Erro", e.message.toString())
+            }
+        }
     }
 }
