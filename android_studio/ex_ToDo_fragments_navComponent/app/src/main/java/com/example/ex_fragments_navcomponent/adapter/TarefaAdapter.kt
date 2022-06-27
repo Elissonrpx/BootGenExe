@@ -1,7 +1,9 @@
 package com.example.ex_fragments_navcomponent.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ex_fragments_navcomponent.MainViewModel
 import com.example.ex_fragments_navcomponent.databinding.CardLayoutBinding
@@ -9,9 +11,11 @@ import com.example.ex_fragments_navcomponent.model.Tarefa
 
 class TarefaAdapter(
     val taskClickListener: TaskClickListener,
-    val mainViewModel: MainViewModel
+    val mainViewModel: MainViewModel,
+    val context: Context
         ): RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
     private var listTarefa = emptyList<Tarefa>()
+
     class TarefaViewHolder (val binding : CardLayoutBinding): RecyclerView.ViewHolder(binding.root){
 
     }
@@ -42,6 +46,9 @@ class TarefaAdapter(
                 mainViewModel.updateTarefa(tarefa)
 
             }
+        holder.binding.buttonDeletar.setOnClickListener {
+            showAlertDialog(tarefa.id)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -52,5 +59,17 @@ class TarefaAdapter(
 
         listTarefa = list.sortedBy{it.id}
         notifyDataSetChanged()
+    }
+
+    private fun showAlertDialog(id: Long){
+        AlertDialog.Builder(context)
+            .setTitle("Excluir Tarefa")
+            .setMessage("Confirmar exclusão da Tarefa?")
+            .setPositiveButton("Sim"){
+                _,_ -> mainViewModel.deleteTarefa(id)
+            }
+            .setNegativeButton("Não"){
+                _,_ ->
+            }.show()
     }
 }

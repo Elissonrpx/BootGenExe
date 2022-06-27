@@ -111,12 +111,12 @@ class FormFragment : Fragment(), TimerPickerListener {
             val salvar: String
             if(tarefaSelecionada != null){
                 salvar = "Tarefa Atualizada"
-                val tarefa = Tarefa(tarefaSelecionada?.id!!,nome, desc, resp, status, categoria)
+                val tarefa = Tarefa(tarefaSelecionada?.id!!,nome, desc, resp,data, status, categoria)
                 mainViewModel.updateTarefa(tarefa)
 
             }else{
                 salvar = "Tarefa Criada"
-                val tarefa = Tarefa(0,nome, desc, resp, status, categoria)
+                val tarefa = Tarefa(0,nome, desc, resp, data, status, categoria)
                 mainViewModel.addTarefa(tarefa)
             }
 
